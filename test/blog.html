@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog - CodeWithNEL</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#6366f1',
+secondary: '#14b8a6'
+},
+borderRadius: {
+'none': '0px',
+'sm': '4px',
+DEFAULT: '8px',
+'md': '12px', 
+'lg': '16px',
+'xl': '20px',
+'2xl': '24px',
+'3xl': '32px',
+'full': '9999px',
+'button': '8px'
+}
+}
+}
+}
+</script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+.back-to-top {
+display: none;
+position: fixed;
+bottom: 20px;
+right: 20px;
+z-index: 99;
+}
+</style>
+</head>
+<body class="font-['Inter'] bg-gray-50">
+<!-- <header class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
+<nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+<div class="flex items-center space-x-8">
+<a href="#" class="text-2xl font-['Pacifico'] text-primary">CodeWithNEL</a>
+<div class="hidden md:flex items-center space-x-6">
+<a href="#" class="text-gray-700 hover:text-primary">Home</a>
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/869c00fe-901d-486d-9290-5706e90cb000" data-readdy="true" class="text-primary">Blog</a>
+<a href="#" class="text-gray-700 hover:text-primary">Tutorials</a>
+<a href="#" class="text-gray-700 hover:text-primary">About</a>
+<a href="#" class="text-gray-700 hover:text-primary">Contact</a>
+</div>
+</div>
+<div class="flex items-center space-x-6">
+<div class="relative hidden md:block">
+<input type="text" placeholder="Search tutorials..." class="pl-10 pr-4 py-2 w-64 rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm">
+<i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+</div>
+<div class="flex items-center space-x-4">
+<a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-red-500">
+<i class="ri-youtube-fill ri-lg"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-black">
+<i class="ri-tiktok-fill ri-lg"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-blue-600">
+<i class="ri-facebook-fill ri-lg"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-blue-500">
+<i class="ri-linkedin-fill ri-lg"></i>
+</a>
+</div>
+<button class="md:hidden w-10 h-10 flex items-center justify-center" id="mobile-menu-button">
+<i class="ri-menu-line ri-2x"></i>
+</button>
+</div>
+</nav>
+<div class="md:hidden hidden" id="mobile-menu">
+<div class="px-4 py-3 space-y-3">
+<a href="#" class="block text-gray-700">Home</a>
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/869c00fe-901d-486d-9290-5706e90cb000" data-readdy="true" class="block text-primary">Blog</a>
+<a href="#" class="block text-gray-700">Tutorials</a>
+<a href="#" class="block text-gray-700">About</a>
+<a href="#" class="block text-gray-700">Contact</a>
+<div class="relative">
+<input type="text" placeholder="Search tutorials..." class="w-full pl-10 pr-4 py-2 rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm">
+<i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+</div>
+</div>
+</div>
+</header> -->
+<header class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
+    <nav class="container mx-auto px-4 py-4">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+        <div class="flex items-center justify-between">
+          <a href="#" class="text-2xl font-['Pacifico'] text-primary">CodeWithNEL</a>
+          <button class="lg:hidden w-10 h-10 flex items-center justify-center" id="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false">
+            <i class="ri-menu-line ri-2x"></i>
+          </button>
+        </div>
+        <div class="hidden lg:flex items-center space-x-6">
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Home</a>
+          <a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/4ab9d43b-49b6-4614-a3a3-6762b97be2f6" data-readdy="true" class="text-gray-700 hover:text-primary transition-colors">Blog</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Tutorials</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">About</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Contact</a>
+        </div>
+        <div class="hidden lg:flex items-center space-x-6">
+          <div class="relative">
+            <input type="text" placeholder="Search tutorials..." class="pl-10 pr-4 py-2 w-64 rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm">
+            <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-red-500 transition-colors" aria-label="YouTube">
+              <i class="ri-youtube-fill ri-lg"></i>
+            </a>
+            <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-black transition-colors" aria-label="TikTok">
+              <i class="ri-tiktok-fill ri-lg"></i>
+            </a>
+            <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors" aria-label="Facebook">
+              <i class="ri-facebook-fill ri-lg"></i>
+            </a>
+            <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-blue-500 transition-colors" aria-label="LinkedIn">
+              <i class="ri-linkedin-fill ri-lg"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="lg:hidden hidden bg-white border-t mobile-menu-enter" id="mobile-menu">
+      <div class="container mx-auto px-4 py-4 space-y-4">
+        <a href="/index.html" class="block text-gray-700 hover:text-primary py-2 transition-colors">Home</a>
+        <a href="/blog.html"  class="block text-gray-700 hover:text-primary py-2 transition-colors">Blog</a>
+        <a href="/tutorial.html" class="block text-gray-700 hover:text-primary py-2 transition-colors">Tutorials</a>
+        <a href="#" class="block text-gray-700 hover:text-primary py-2 transition-colors">About</a>
+        <a href="#" class="block text-gray-700 hover:text-primary py-2 transition-colors">Contact</a>
+        <div class="relative">
+          <input type="text" placeholder="Search tutorials..." class="w-full pl-10 pr-4 py-2 rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm">
+          <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        </div>
+        <div class="flex items-center space-x-4 py-2">
+          <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-red-500 transition-colors" aria-label="YouTube">
+            <i class="ri-youtube-fill ri-lg"></i>
+          </a>
+          <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-black transition-colors" aria-label="TikTok">
+            <i class="ri-tiktok-fill ri-lg"></i>
+          </a>
+          <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors" aria-label="Facebook">
+            <i class="ri-facebook-fill ri-lg"></i>
+          </a>
+          <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-blue-500 transition-colors" aria-label="LinkedIn">
+            <i class="ri-linkedin-fill ri-lg"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+<main class="pt-20">
+<section class="bg-white py-12">
+<div class="container mx-auto px-4">
+<div class="max-w-4xl mx-auto">
+<h1 class="text-4xl font-bold text-gray-900 mb-4">Programming Blog</h1>
+<p class="text-xl text-gray-600 mb-8">Discover in-depth tutorials, tips and best practices across different programming platforms</p>
+<div class="relative mb-8">
+<input type="text" placeholder="Search articles..." class="w-full pl-12 pr-4 py-3 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/20 text-base">
+<i class="ri-search-line absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
+</div>
+<div class="flex flex-wrap gap-3 mb-12">
+<button class="px-4 py-2 rounded-full bg-primary text-white">All</button>
+<button class="px-4 py-2 rounded-full border hover:bg-gray-50">Frontend</button>
+<button class="px-4 py-2 rounded-full border hover:bg-gray-50">Backend</button>
+<button class="px-4 py-2 rounded-full border hover:bg-gray-50">Mobile</button>
+<button class="px-4 py-2 rounded-full border hover:bg-gray-50">DevOps</button>
+<button class="px-4 py-2 rounded-full border hover:bg-gray-50">AI/ML</button>
+</div>
+</div>
+</div>
+</section>
+
+<section class="py-12">
+<div class="container mx-auto px-4">
+<div class="flex flex-col lg:flex-row gap-8">
+<div class="lg:w-2/3">
+<div class="grid md:grid-cols-2 gap-8">
+<article class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/869c00fe-901d-486d-9290-5706e90cb000" data-readdy="true">
+<img src="https://public.readdy.ai/ai/img_res/0e53b3886383d298c9db2c8bb8ec75d2.jpg" alt="React Development" class="w-full h-48 object-cover rounded-t-xl">
+<div class="p-6">
+<span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Frontend</span>
+<h3 class="text-xl font-semibold mt-4 mb-2">Modern React Development in 2025</h3>
+<p class="text-gray-600 mb-4">Learn the latest React features and best practices for building modern web applications.</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img src="https://public.readdy.ai/ai/img_res/c3a38d281e6424256954eed480e09714.jpg" alt="Author" class="w-8 h-8 rounded-full">
+<span class="text-sm text-gray-600">James Wilson</span>
+</div>
+<div class="flex items-center gap-4 text-sm text-gray-500">
+<span>10 min read</span>
+<span>Mar 23, 2025</span>
+</div>
+</div>
+</div>
+</a>
+</article>
+
+<article class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/869c00fe-901d-486d-9290-5706e90cb000" data-readdy="true">
+<img src="https://public.readdy.ai/ai/img_res/c1938cb3dee427f4101d09f4672b3f95.jpg" alt="Python ML" class="w-full h-48 object-cover rounded-t-xl">
+<div class="p-6">
+<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">AI/ML</span>
+<h3 class="text-xl font-semibold mt-4 mb-2">Getting Started with Machine Learning in Python</h3>
+<p class="text-gray-600 mb-4">A comprehensive guide to machine learning fundamentals using Python and popular libraries.</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img src="https://public.readdy.ai/ai/img_res/3b3f9972f1f2eece87a68ce1e00ec2a1.jpg" alt="Author" class="w-8 h-8 rounded-full">
+<span class="text-sm text-gray-600">Sarah Chen</span>
+</div>
+<div class="flex items-center gap-4 text-sm text-gray-500">
+<span>15 min read</span>
+<span>Mar 22, 2025</span>
+</div>
+</div>
+</div>
+</a>
+</article>
+
+<article class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/869c00fe-901d-486d-9290-5706e90cb000" data-readdy="true">
+<img src="https://public.readdy.ai/ai/img_res/2ef4f403768164d3fe730d1e25ae0689.jpg" alt="Mobile Development" class="w-full h-48 object-cover rounded-t-xl">
+<div class="p-6">
+<span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Mobile</span>
+<h3 class="text-xl font-semibold mt-4 mb-2">Cross-Platform Mobile Development Guide</h3>
+<p class="text-gray-600 mb-4">Explore different approaches to building mobile apps for iOS and Android platforms.</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img src="https://public.readdy.ai/ai/img_res/387e6ef0a5c458f3a67938a258e04e8a.jpg" alt="Author" class="w-8 h-8 rounded-full">
+<span class="text-sm text-gray-600">Michael Brown</span>
+</div>
+<div class="flex items-center gap-4 text-sm text-gray-500">
+<span>12 min read</span>
+<span>Mar 21, 2025</span>
+</div>
+</div>
+</div>
+</a>
+</article>
+
+<article class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/869c00fe-901d-486d-9290-5706e90cb000" data-readdy="true">
+<img src="https://public.readdy.ai/ai/img_res/51d3351c8020c5214a7bcfdb37f629ab.jpg" alt="DevOps" class="w-full h-48 object-cover rounded-t-xl">
+<div class="p-6">
+<span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm">DevOps</span>
+<h3 class="text-xl font-semibold mt-4 mb-2">Modern DevOps Practices and Tools</h3>
+<p class="text-gray-600 mb-4">Learn about continuous integration, deployment, and modern DevOps tooling.</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img src="https://public.readdy.ai/ai/img_res/544dd53e214f7156a35457b9594506dd.jpg" alt="Author" class="w-8 h-8 rounded-full">
+<span class="text-sm text-gray-600">Emily Taylor</span>
+</div>
+<div class="flex items-center gap-4 text-sm text-gray-500">
+<span>8 min read</span>
+<span>Mar 20, 2025</span>
+</div>
+</div>
+</div>
+</a>
+</article>
+</div>
+
+<div class="flex justify-center mt-12">
+<nav class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-50">
+<i class="ri-arrow-left-s-line"></i>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-50">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-50">3</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-50">
+<i class="ri-arrow-right-s-line"></i>
+</button>
+</nav>
+</div>
+</div>
+
+<div class="lg:w-1/3 space-y-8">
+<div class="bg-white rounded-xl shadow-sm p-6">
+<h3 class="text-lg font-semibold mb-4">Categories</h3>
+<ul class="space-y-3">
+<li class="flex items-center justify-between">
+<span class="text-gray-600">Frontend Development</span>
+<span class="text-sm text-gray-500">24</span>
+</li>
+<li class="flex items-center justify-between">
+<span class="text-gray-600">Backend Development</span>
+<span class="text-sm text-gray-500">18</span>
+</li>
+<li class="flex items-center justify-between">
+<span class="text-gray-600">Mobile Development</span>
+<span class="text-sm text-gray-500">15</span>
+</li>
+<li class="flex items-center justify-between">
+<span class="text-gray-600">DevOps & Cloud</span>
+<span class="text-sm text-gray-500">12</span>
+</li>
+<li class="flex items-center justify-between">
+<span class="text-gray-600">AI & Machine Learning</span>
+<span class="text-sm text-gray-500">9</span>
+</li>
+</ul>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm p-6">
+<h3 class="text-lg font-semibold mb-4">Popular Posts</h3>
+<div class="space-y-4">
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/869c00fe-901d-486d-9290-5706e90cb000" data-readdy="true" class="flex gap-4">
+<img src="https://public.readdy.ai/ai/img_res/26eb0ca71c74d68a61846e29c4887a83.jpg" alt="Popular Post" class="w-20 h-20 rounded-lg object-cover">
+<div>
+<h4 class="font-medium text-gray-900">TypeScript Best Practices in 2025</h4>
+<p class="text-sm text-gray-500">5.2k views</p>
+</div>
+</a>
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/869c00fe-901d-486d-9290-5706e90cb000" data-readdy="true" class="flex gap-4">
+<img src="https://public.readdy.ai/ai/img_res/867a89bef99e3b6ad529bfe91480405a.jpg" alt="Popular Post" class="w-20 h-20 rounded-lg object-cover">
+<div>
+<h4 class="font-medium text-gray-900">Docker & Kubernetes Guide</h4>
+<p class="text-sm text-gray-500">4.8k views</p>
+</div>
+</a>
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/869c00fe-901d-486d-9290-5706e90cb000" data-readdy="true" class="flex gap-4">
+<img src="https://public.readdy.ai/ai/img_res/67451898f35077d8e2d9df65030ae185.jpg" alt="Popular Post" class="w-20 h-20 rounded-lg object-cover">
+<div>
+<h4 class="font-medium text-gray-900">Python for Data Science</h4>
+<p class="text-sm text-gray-500">4.3k views</p>
+</div>
+</a>
+</div>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm p-6">
+<h3 class="text-lg font-semibold mb-4">Tags</h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600 cursor-pointer hover:bg-gray-200">React</span>
+<span class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600 cursor-pointer hover:bg-gray-200">Vue</span>
+<span class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600 cursor-pointer hover:bg-gray-200">Angular</span>
+<span class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600 cursor-pointer hover:bg-gray-200">Node.js</span>
+<span class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600 cursor-pointer hover:bg-gray-200">Python</span>
+<span class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600 cursor-pointer hover:bg-gray-200">Java</span>
+<span class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600 cursor-pointer hover:bg-gray-200">Docker</span>
+<span class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600 cursor-pointer hover:bg-gray-200">AWS</span>
+<span class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600 cursor-pointer hover:bg-gray-200">DevOps</span>
+<span class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600 cursor-pointer hover:bg-gray-200">ML</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+
+<footer class="bg-gray-900 text-gray-300 py-20">
+<div class="container mx-auto px-4">
+<div class="grid md:grid-cols-4 gap-12">
+<div class="space-y-6">
+<h3 class="text-2xl font-['Pacifico'] text-white">CodeWithNEL</h3>
+<p class="text-gray-400">Empowering developers through multi-platform educational content.</p>
+<div class="flex space-x-4">
+<a href="#" class="text-gray-400 hover:text-red-500">
+<i class="ri-youtube-fill ri-lg"></i>
+</a>
+<a href="#" class="text-gray-400 hover:text-white">
+<i class="ri-tiktok-fill ri-lg"></i>
+</a>
+<a href="#" class="text-gray-400 hover:text-blue-600">
+<i class="ri-facebook-fill ri-lg"></i>
+</a>
+<a href="#" class="text-gray-400 hover:text-blue-500">
+<i class="ri-linkedin-fill ri-lg"></i>
+</a>
+</div>
+</div>
+<div>
+<h4 class="text-white font-semibold mb-6">Quick Links</h4>
+<ul class="space-y-4">
+<li><a href="#" class="hover:text-white">Home</a></li>
+<li><a href="#" class="hover:text-white">Blog</a></li>
+<li><a href="#" class="hover:text-white">Tutorials</a></li>
+<li><a href="#" class="hover:text-white">About</a></li>
+<li><a href="#" class="hover:text-white">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-semibold mb-6">Contact</h4>
+<ul class="space-y-4">
+<li class="flex items-center gap-2">
+<i class="ri-mail-line"></i>
+<span>hello@codewithnel.com</span>
+</li>
+<li class="flex items-center gap-2">
+<i class="ri-map-pin-line"></i>
+<span>San Francisco, CA</span>
+</li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-semibold mb-6">Newsletter</h4>
+<form class="space-y-4">
+<input type="email" placeholder="Your email" class="w-full px-4 py-2 rounded bg-gray-800 border-none focus:ring-2 focus:ring-primary/20 text-white">
+<button type="submit" class="w-full bg-primary text-white px-4 py-2 rounded-button font-medium hover:bg-primary/90 transition-colors">Subscribe</button>
+</form>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-gray-800 flex flex-wrap justify-between items-center">
+<p>&copy; 2025 CodeWithNEL. All rights reserved.</p>
+<div class="flex gap-4">
+<a href="#" class="hover:text-white">Privacy Policy</a>
+<a href="#" class="hover:text-white">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+
+<button class="back-to-top bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-colors" id="backToTop">
+<i class="ri-arrow-up-line ri-lg"></i>
+</button>
+
+<script>
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+const backToTop = document.getElementById('backToTop');
+
+mobileMenuButton.addEventListener('click', () => {
+mobileMenu.classList.toggle('hidden');
+});
+
+window.addEventListener('scroll', () => {
+if (window.pageYOffset > 300) {
+backToTop.style.display = 'block';
+} else {
+backToTop.style.display = 'none';
+}
+});
+
+backToTop.addEventListener('click', () => {
+window.scrollTo({
+top: 0,
+behavior: 'smooth'
+});
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+anchor.addEventListener('click', function (e) {
+e.preventDefault();
+document.querySelector(this.getAttribute('href')).scrollIntoView({
+behavior: 'smooth'
+});
+});
+});
+</script>
+</body>
+</html>

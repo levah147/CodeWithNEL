@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - CodeWithNEL Blog{% endblock %}
+
+{% block extra_css %}
+<style>
+  .blog-content h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .blog-content h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .blog-content p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+  
+  .blog-content ul, .blog-content ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+  
+  .blog-content ul {
+    list-style-type: disc;
+  }
+  
+  .blog-content ol {
+    list-style-type: decimal;
+  }
+  
+  .blog-content li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .blog-content pre {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+  
+  .blog-content code {
+    font-family: monospace;
+    background-color: #f1f1f1;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-size: 0.9em;
+  }
+  
+  .blog-content pre code {
+    background-color: transparent;
+    padding: 0;
+  }
+  
+  .blog-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1.5rem 0;
+  }
+  
+  .blog-content blockquote {
+    border-left: 4px solid #6366f1;
+    padding-left: 1rem;
+    font-style: italic;
+    margin: 1.5rem 0;
+    color: #4b5563;
+  }
+  
+  .blog-content a {
+    color: #6366f1;
+    text-decoration: none;
+  }
+  
+  .blog-content a:hover {
+    text-decoration: underline;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<article>
+  <!-- Hero Section -->
+  <div class="bg-primary/10 py-12 sm:py-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto">
+        <div class="flex items-center gap-2 mb-4">
+          <a href="{% url 'blog_list' %}" class="text-gray-600 hover:text-primary transition-colors">Blog</a>
+          <i class="ri-arrow-right-s-line text-gray-400"></i>
+          <a href="{% url 'blog_list' %}?category={{ post.category.slug }}" class="text-gray-600 hover:text-primary transition-colors">{{ post.category.name }}</a>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{{ post.title }}</h1>
+        <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+          <div class="flex items-center gap-2">
+            <i class="ri-folder-line text-primary"></i>
+            <span>{{ post.category.name }}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i class="ri-time-line"></i>
+            <span>{{ post.read_time }} min read</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i class="ri-calendar-line"></i>
+            <span>{{ post.published_date|date:"F d, Y" }}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i class="ri-eye-line"></i>
+            <span>{{ post.view_count }} views</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="container mx-auto px-4 py-12">
+    <div class="flex flex-col lg:flex-row gap-12">
+      <div class="lg:w-2/3">
+        <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-auto rounded-xl mb-8">
+        
+        <!-- Author Info -->
+        <div class="flex items-center gap-4 mb-8 p-4 bg-gray-50 rounded-lg">
+          {% if post.author.profile_image %}
+          <img src="{{ post.author.profile_image.url }}" alt="{{ post.author.name }}" class="w-12 h-12 rounded-full">
+          {% else %}
+          <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+            <i class="ri-user-line text-gray-500"></i>
+          </div>
+          {% endif %}
+          <div>
+            <h3 class="font-semibold">{{ post.author.name }}</h3>
+            <p class="text-sm text-gray-600">{{ post.author.bio|truncatechars:100 }}</p>
+          </div>
+        </div>
+        
+        <div class="prose max-w-none blog-content">
+          {{ post.content|safe }}
+        </div>
+        
+        <!-- Tags -->
+        <div class="mt-8 pt-8 border-t border-gray-200">
+          <h3 class="text-lg font-semibold mb-4">Tags</h3>
+          <div class="flex flex-wrap gap-2">
+            {% for tag in post.tags.all %}
+            <a href="{% url 'blog_list' %}?tag={{ tag.slug }}" class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600 cursor-pointer hover:bg-gray-200">{{ tag.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+        
+        <!-- Share -->
+        <div class="mt-8 pt-8 border-t border-gray-200">
+          <h3 class="text-lg font-semibold mb-4">Share this post</h3>
+          <div class="flex gap-4">
+            <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600 transition-colors" aria-label="Share on Twitter">
+              <i class="ri-twitter-x-fill"></i>
+            </a>
+            <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-blue-500 hover:text-white transition-colors" aria-label="Share on Facebook">
+              <i class="ri-facebook-fill"></i>
+            </a>
+            <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-blue-700 hover:text-white transition-colors" aria-label="Share on LinkedIn">
+              <i class="ri-linkedin-fill"></i>
+            </a>
+            <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-red-100 hover:text-red-600 transition-colors" aria-label="Share via Email">
+              <i class="ri-mail-line"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sidebar -->
+      <div class="lg:w-1/3 space-y-8">
+        <!-- Related Posts -->
+        <div class="bg-gray-50 rounded-xl p-6">
+          <h3 class="text-xl font-semibold mb-4">Related Posts</h3>
+          <div class="space-y-4">
+            {% for related in related_posts %}
+            <div class="flex gap-4">
+              <a href="{{ related.get_absolute_url }}" class="shrink-0">
+                <img src="{{ related.featured_image.url }}" alt="{{ related.title }}" class="w-20 h-20 object-cover rounded-lg">
+              </a>
+              <div>
+                <h4 class="font-medium hover:text-primary transition-colors">
+                  <a href="{{ related.get_absolute_url }}">{{ related.title }}</a>
+                </h4>
+                <div class="text-xs text-gray-500 mt-1">{{ related.published_date|date:"M d, Y" }}</div>
+              </div>
+            </div>
+            {% empty %}
+            <p class="text-gray-500 text-sm">No related posts found.</p>
+            {% endfor %}
+          </div>
+        </div>
+        
+        <!-- Categories -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold mb-4">Categories</h3>
+          <ul class="space-y-3">
+            {% for category in categories %}
+            <li class="flex items-center justify-between">
+              <a href="{% url 'blog_list' %}?category={{ category.slug }}" class="text-gray-600 hover:text-primary">{{ category.name }}</a>
+              <span class="text-sm text-gray-500">{{ category.post_count }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        
+        <!-- Popular Posts -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold mb-4">Popular Posts</h3>
+          <div class="space-y-4">
+            {% for popular in popular_posts %}
+            <a href="{{ popular.post.get_absolute_url }}" class="flex gap-4">
+              <img src="{{ popular.post.featured_image.url }}" alt="{{ popular.post.title }}" class="w-20 h-20 rounded-lg object-cover">
+              <div>
+                <h4 class="font-medium text-gray-900">{{ popular.post.title }}</h4>
+                <p class="text-sm text-gray-500">{{ popular.post.view_count }} views</p>
+              </div>
+            </a>
+            {% empty %}
+            <p class="text-gray-500">No popular posts yet.</p>
+            {% endfor %}
+          </div>
+        </div>
+        
+        <!-- Tags -->
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold mb-4">Tags</h3>
+          <div class="flex flex-wrap gap-2">
+            {% for tag in tags %}
+            <a href="{% url 'blog_list' %}?tag={{ tag.slug }}" class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600 cursor-pointer hover:bg-gray-200">{{ tag.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+        
+        <!-- Newsletter -->
+        <div class="bg-primary/10 rounded-xl p-6">
+          <h3 class="text-lg font-semibold mb-2">Subscribe</h3>
+          <p class="text-sm text-gray-600 mb-4">Get notified about new blog posts</p>
+          <form method="post" action="{% url 'home' %}" class="space-y-3">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Your email" class="w-full px-3 py-2 rounded border-none focus:ring-2 focus:ring-primary/20 text-sm">
+            <button type="submit" class="w-full bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-primary/90 transition-colors text-sm">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+{% endblock %}
+

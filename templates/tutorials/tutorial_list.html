@@ -1,0 +1,308 @@
+{% extends 'base.html' %}
+
+{% block title %}Tutorials - CodeWithNEL{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 200px;
+    z-index: 50;
+  }
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="bg-white py-12">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">Programming Tutorials</h1>
+      <p class="text-xl text-gray-600 mb-8">Master programming with our comprehensive tutorials and hands-on examples</p>
+      <div class="relative mb-12">
+        <form action="{% url 'tutorial_list' %}" method="get">
+          {{ search_form.query }}
+          <i class="ri-search-line absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-8 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-wrap gap-4 justify-center mb-8">
+      <div class="dropdown relative">
+        <button class="px-4 py-2 bg-white rounded-full border hover:bg-gray-50 flex items-center gap-2">
+          <span>Language</span>
+          <i class="ri-arrow-down-s-line"></i>
+        </button>
+        <div class="dropdown-content bg-white mt-2 rounded-xl shadow-lg border">
+          <div class="p-2 space-y-1">
+            <a href="{% url 'tutorial_list' %}{% if selected_framework %}?framework={{ selected_framework }}{% endif %}{% if selected_difficulty %}&difficulty={{ selected_difficulty }}{% endif %}{% if selected_duration %}&duration={{ selected_duration }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="block text-left px-4 py-2 rounded hover:bg-gray-50 text-sm {% if not selected_language %}bg-primary text-white hover:bg-primary/90{% endif %}">All Languages</a>
+            {% for language in languages %}
+            <a href="{% url 'tutorial_list' %}?language={{ language.slug }}{% if selected_framework %}&framework={{ selected_framework }}{% endif %}{% if selected_difficulty %}&difficulty={{ selected_difficulty }}{% endif %}{% if selected_duration %}&duration={{ selected_duration }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="block text-left px-4 py-2 rounded hover:bg-gray-50 text-sm {% if selected_language == language.slug %}bg-primary text-white hover:bg-primary/90{% endif %}">{{ language.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="dropdown relative">
+        <button class="px-4 py-2 bg-white rounded-full border hover:bg-gray-50 flex items-center gap-2">
+          <span>Framework</span>
+          <i class="ri-arrow-down-s-line"></i>
+        </button>
+        <div class="dropdown-content bg-white mt-2 rounded-xl shadow-lg border">
+          <div class="p-2 space-y-1">
+            <a href="{% url 'tutorial_list' %}{% if selected_language %}?language={{ selected_language }}{% endif %}{% if selected_difficulty %}&difficulty={{ selected_difficulty }}{% endif %}{% if selected_duration %}&duration={{ selected_duration }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="block text-left px-4 py-2 rounded hover:bg-gray-50 text-sm {% if not selected_framework %}bg-primary text-white hover:bg-primary/90{% endif %}">All Frameworks</a>
+            {% for framework in frameworks %}
+            <a href="{% url 'tutorial_list' %}{% if selected_language %}?language={{ selected_language }}&{% else %}?{% endif %}framework={{ framework.slug }}{% if selected_difficulty %}&difficulty={{ selected_difficulty }}{% endif %}{% if selected_duration %}&duration={{ selected_duration }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="block text-left px-4 py-2 rounded hover:bg-gray-50 text-sm {% if selected_framework == framework.slug %}bg-primary text-white hover:bg-primary/90{% endif %}">{{ framework.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="dropdown relative">
+        <button class="px-4 py-2 bg-white rounded-full border hover:bg-gray-50 flex items-center gap-2">
+          <span>Difficulty</span>
+          <i class="ri-arrow-down-s-line"></i>
+        </button>
+        <div class="dropdown-content bg-white mt-2 rounded-xl shadow-lg border">
+          <div class="p-2 space-y-1">
+            <a href="{% url 'tutorial_list' %}{% if selected_language %}?language={{ selected_language }}{% endif %}{% if selected_framework %}&framework={{ selected_framework }}{% endif %}{% if selected_duration %}&duration={{ selected_duration }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="block text-left px-4 py-2 rounded hover:bg-gray-50 text-sm {% if not selected_difficulty %}bg-primary text-white hover:bg-primary/90{% endif %}">All Levels</a>
+            {% for level in difficulty_levels %}
+            <a href="{% url 'tutorial_list' %}{% if selected_language %}?language={{ selected_language }}&{% else %}?{% endif %}{% if selected_framework %}framework={{ selected_framework }}&{% endif %}difficulty={{ level.slug }}{% if selected_duration %}&duration={{ selected_duration }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="block text-left px-4 py-2 rounded hover:bg-gray-50 text-sm {% if selected_difficulty == level.slug %}bg-primary text-white hover:bg-primary/90{% endif %}">{{ level.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div class="dropdown relative">
+        <button class="px-4 py-2 bg-white rounded-full border hover:bg-gray-50 flex items-center gap-2">
+          <span>Duration</span>
+          <i class="ri-arrow-down-s-line"></i>
+        </button>
+        <div class="dropdown-content bg-white mt-2 rounded-xl shadow-lg border">
+          <div class="p-2 space-y-1">
+            <a href="{% url 'tutorial_list' %}{% if selected_language %}?language={{ selected_language }}{% endif %}{% if selected_framework %}&framework={{ selected_framework }}{% endif %}{% if selected_difficulty %}&difficulty={{ selected_difficulty }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="block text-left px-4 py-2 rounded hover:bg-gray-50 text-sm {% if not selected_duration %}bg-primary text-white hover:bg-primary/90{% endif %}">All Durations</a>
+            <a href="{% url 'tutorial_list' %}{% if selected_language %}?language={{ selected_language }}&{% else %}?{% endif %}{% if selected_framework %}framework={{ selected_framework }}&{% endif %}{% if selected_difficulty %}difficulty={{ selected_difficulty }}&{% endif %}duration=0-30{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="block text-left px-4 py-2 rounded hover:bg-gray-50 text-sm {% if selected_duration == '0-30' %}bg-primary text-white hover:bg-primary/90{% endif %}">0-30 min</a>
+            <a href="{% url 'tutorial_list' %}{% if selected_language %}?language={{ selected_language }}&{% else %}?{% endif %}{% if selected_framework %}framework={{ selected_framework }}&{% endif %}{% if selected_difficulty %}difficulty={{ selected_difficulty }}&{% endif %}duration=30-60{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="block text-left px-4 py-2 rounded hover:bg-gray-50 text-sm {% if selected_duration == '30-60' %}bg-primary text-white hover:bg-primary/90{% endif %}">30-60 min</a>
+            <a href="{% url 'tutorial_list' %}{% if selected_language %}?language={{ selected_language }}&{% else %}?{% endif %}{% if selected_framework %}framework={{ selected_framework }}&{% endif %}{% if selected_difficulty %}difficulty={{ selected_difficulty }}&{% endif %}duration=60+{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="block text-left px-4 py-2 rounded hover:bg-gray-50 text-sm {% if selected_duration == '60+' %}bg-primary text-white hover:bg-primary/90{% endif %}">60+ min</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="dropdown relative">
+        <button class="px-4 py-2 bg-white rounded-full border hover:bg-gray-50 flex items-center gap-2">
+          <span>Sort by</span>
+          <i class="ri-arrow-down-s-line"></i>
+        </button>
+        <div class="dropdown-content bg-white mt-2 rounded-xl shadow-lg border">
+          <div class="p-2 space-y-1">
+            <a href="{% url 'tutorial_list' %}{% if selected_language %}?language={{ selected_language }}&{% else %}?{% endif %}{% if selected_framework %}framework={{ selected_framework }}&{% endif %}{% if selected_difficulty %}difficulty={{ selected_difficulty }}&{% endif %}{% if selected_duration %}duration={{ selected_duration }}&{% endif %}sort=recent" class="block text-left px-4 py-2 rounded hover:bg-gray-50 text-sm {% if selected_sort == 'recent' or not selected_sort %}bg-primary text-white hover:bg-primary/90{% endif %}">Most Recent</a>
+            <a href="{% url 'tutorial_list' %}{% if selected_language %}?language={{ selected_language }}&{% else %}?{% url 'tutorial_list' %}{% endif %}{% if selected_language %}?language={{ selected_language }}&{% else %}?{% endif %}{% if selected_framework %}framework={{ selected_framework }}&{% endif %}{% if selected_difficulty %}difficulty={{ selected_difficulty }}&{% endif %}{% if selected_duration %}duration={{ selected_duration }}&{% endif %}sort=popular" class="block text-left px-4 py-2 rounded hover:bg-gray-50 text-sm {% if selected_sort == 'popular' %}bg-primary text-white hover:bg-primary/90{% endif %}">Most Popular</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-12">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col lg:flex-row gap-8">
+      <div class="lg:w-3/4">
+        {% if search_form.cleaned_data.query %}
+        <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+          <p class="text-gray-700">
+            Search results for: <span class="font-semibold">{{ search_form.cleaned_data.query }}</span>
+            <a href="{% url 'tutorial_list' %}{% if selected_language %}?language={{ selected_language }}{% endif %}{% if selected_framework %}&framework={{ selected_framework }}{% endif %}{% if selected_difficulty %}&difficulty={{ selected_difficulty }}{% endif %}{% if selected_duration %}&duration={{ selected_duration }}{% endif %}{% if selected_sort %}&sort={{ selected_sort }}{% endif %}" class="ml-2 text-primary hover:underline">Clear</a>
+          </p>
+        </div>
+        {% endif %}
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          {% for tutorial in page_obj %}
+          <a href="{{ tutorial.get_absolute_url }}" class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <div class="relative">
+              <img src="{{ tutorial.image.url }}" alt="{{ tutorial.title }}" class="w-full h-40 object-cover rounded-t-xl">
+              <span class="absolute top-3 right-3 px-2 py-1 bg-{{ tutorial.difficulty.color_class }}-500 text-white text-xs rounded-full">{{ tutorial.difficulty.name }}</span>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-3">
+                {% if tutorial.language %}
+                <span class="px-2 py-1 bg-{{ tutorial.language.color_class }}-100 text-{{ tutorial.language.color_class }}-800 rounded-full text-xs">{{ tutorial.language.name }}</span>
+                {% endif %}
+                {% if tutorial.framework %}
+                <span class="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">{{ tutorial.framework.name }}</span>
+                {% endif %}
+                <span class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs">{{ tutorial.read_time }} min</span>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">{{ tutorial.title }}</h3>
+              <p class="text-gray-600 text-sm mb-4">{{ tutorial.description|truncatechars:100 }}</p>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  {% if tutorial.author.profile_image %}
+                  <img src="{{ tutorial.author.profile_image.url }}" alt="{{ tutorial.author.name }}" class="w-8 h-8 rounded-full">
+                  {% else %}
+                  <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                    <i class="ri-user-line text-gray-500"></i>
+                  </div>
+                  {% endif %}
+                  <span class="text-sm text-gray-600">{{ tutorial.author.name }}</span>
+                </div>
+                <div class="flex items-center gap-2 text-sm text-gray-500">
+                  <i class="ri-eye-line"></i>
+                  <span>{{ tutorial.view_count }}</span>
+                </div>
+              </div>
+            </div>
+          </a>
+          {% empty %}
+          <div class="col-span-full text-center py-12">
+            <i class="ri-file-list-3-line text-gray-300 text-6xl mb-4"></i>
+            <h3 class="text-xl font-semibold text-gray-700">No tutorials found</h3>
+            <p class="text-gray-500 mt-2">Try adjusting your search or filter criteria</p>
+          </div>
+          {% endfor %}
+        </div>
+
+        {% if page_obj.has_other_pages %}
+        <div class="flex justify-center mt-12">
+          <nav class="flex items-center gap-2">
+            {% if page_obj.has_previous %}
+            <a href="?{% if selected_language %}language={{ selected_language }}&{% endif %}{% if selected_framework %}framework={{ selected_framework }}&{% endif %}{% if selected_difficulty %}difficulty={{ selected_difficulty }}&{% endif %}{% if selected_duration %}duration={{ selected_duration }}&{% endif %}{% if selected_sort %}sort={{ selected_sort }}&{% endif %}{% if search_form.cleaned_data.query %}query={{ search_form.cleaned_data.query }}&{% endif %}page={{ page_obj.previous_page_number }}" class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-50">
+              <i class="ri-arrow-left-s-line"></i>
+            </a>
+            {% else %}
+            <span class="w-10 h-10 flex items-center justify-center rounded-full border text-gray-300 cursor-not-allowed">
+              <i class="ri-arrow-left-s-line"></i>
+            </span>
+            {% endif %}
+            
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+              <span class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white">{{ num }}</span>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+              <a href="?{% if selected_language %}language={{ selected_language }}&{% endif %}{% if selected_framework %}framework={{ selected_framework }}&{% endif %}{% if selected_difficulty %}difficulty={{ selected_difficulty }}&{% endif %}{% if selected_duration %}duration={{ selected_duration }}&{% endif %}{% if selected_sort %}sort={{ selected_sort }}&{% endif %}{% if search_form.cleaned_data.query %}query={{ search_form.cleaned_data.query }}&{% endif %}page={{ num }}" class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-50">{{ num }}</a>
+              {% endif %}
+            {% endfor %}
+            
+            {% if page_obj.has_next %}
+            <a href="?{% if selected_language %}language={{ selected_language }}&{% endif %}{% if selected_framework %}framework={{ selected_framework }}&{% endif %}{% if selected_difficulty %}difficulty={{ selected_difficulty }}&{% endif %}{% if selected_duration %}duration={{ selected_duration }}&{% endif %}{% if selected_sort %}sort={{ selected_sort }}&{% endif %}{% if search_form.cleaned_data.query %}query={{ search_form.cleaned_data.query }}&{% endif %}page={{ page_obj.next_page_number }}" class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-50">
+              <i class="ri-arrow-right-s-line"></i>
+            </a>
+            {% else %}
+            <span class="w-10 h-10 flex items-center justify-center rounded-full border text-gray-300 cursor-not-allowed">
+              <i class="ri-arrow-right-s-line"></i>
+            </span>
+            {% endif %}
+          </nav>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="lg:w-1/4 space-y-6">
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold mb-4">Learning Paths</h3>
+          <div class="space-y-4">
+            {% for path in learning_paths %}
+            <a href="{{ path.get_absolute_url }}" class="block p-4 bg-gray-50 rounded-lg hover:bg-gray-100">
+              <h4 class="font-medium mb-1">{{ path.title }}</h4>
+              <p class="text-sm text-gray-600">{{ path.description|truncatechars:60 }}</p>
+              {% if request.user.is_authenticated %}
+                {% for progress in request.user.userprogress_set.all %}
+                  {% if progress.learning_path.id == path.id %}
+                  <div class="mt-2 h-2 bg-gray-200 rounded-full">
+                    <div class="h-full w-[{{ progress.progress_percentage }}%] bg-primary rounded-full"></div>
+                  </div>
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+              <div class="mt-2 h-2 bg-gray-200 rounded-full">
+                <div class="h-full w-0 bg-primary rounded-full"></div>
+              </div>
+              {% endif %}
+            </a>
+            {% empty %}
+            <p class="text-gray-500">No learning paths available.</p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold mb-4">Popular Categories</h3>
+          <div class="space-y-3">
+            {% for category in popular_categories %}
+            <div class="flex items-center justify-between">
+              <a href="{% url 'tutorial_list' %}?category={{ category.slug }}" class="text-gray-600 hover:text-primary">{{ category.name }}</a>
+              <span class="text-sm text-gray-500">{{ category.tutorial_count }} tutorials</span>
+            </div>
+            {% empty %}
+            <p class="text-gray-500">No categories available.</p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold mb-4">Skill Level Distribution</h3>
+          <div id="skillChart" class="h-64"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+  const skillChart = echarts.init(document.getElementById('skillChart'));
+  const skillOption = {
+    animation: false,
+    tooltip: {
+      trigger: 'item',
+      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+      textStyle: {
+        color: '#1f2937'
+      }
+    },
+    series: [{
+      type: 'pie',
+      radius: ['40%', '70%'],
+      avoidLabelOverlap: false,
+      itemStyle: {
+        borderRadius: 10,
+        borderColor: '#fff',
+        borderWidth: 2
+      },
+      label: {
+        show: false
+      },
+      labelLine: {
+        show: false
+      },
+      data: [
+        {% for level in skill_distribution %}
+        { 
+          value: {{ level.count }}, 
+          name: '{{ level.name }}', 
+          itemStyle: { 
+            color: 'rgba({{ level.color_class }}, 1)' 
+          } 
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+      ]
+    }]
+  };
+  skillChart.setOption(skillOption);
+
+  window.addEventListener('resize', () => {
+    skillChart.resize();
+  });
+</script>
+{% endblock %}
+

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ learning_path.title }} - CodeWithNEL{% endblock %}
+
+{% block content %}
+<section class="bg-primary/10 py-12 sm:py-16">
+  <div class="container mx-auto px-4">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center gap-2 mb-4">
+        <a href="{% url 'learning_path_list' %}" class="text-gray-600 hover:text-primary transition-colors">Learning Paths</a>
+        <i class="ri-arrow-right-s-line text-gray-400"></i>
+        <span class="text-gray-900">{{ learning_path.title }}</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{{ learning_path.title }}</h1>
+      <p class="text-lg text-gray-600 mb-6">{{ learning_path.description }}</p>
+      
+      {% if user_progress %}
+      <div class="bg-white rounded-lg p-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+            <span class="text-xl font-bold text-primary">{{ user_progress.progress_percentage }}%</span>
+          </div>
+          <div>
+            <h3 class="font-semibold">Your Progress</h3>
+            <p class="text-sm text-gray-600">{{ user_progress.completed_tutorials.count }} of {{ learning_path.tutorials.count }} tutorials completed</p>
+          </div>
+        </div>
+        <div class="w-1/3 h-2 bg-gray-200 rounded-full">
+          <div class="h-full w-[{{ user_progress.progress_percentage }}%] bg-primary rounded-full"></div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section class="py-12">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold mb-6">Tutorials in this Path</h2>
+      
+      <div class="space-y-6">
+        {% for tutorial in tutorials %}
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <div class="flex flex-col md:flex-row gap-6">
+            <a href="{{ tutorial.get_absolute_url }}" class="md:w-1/4 shrink-0">
+              <img src="{{ tutorial.image.url }}" alt="{{ tutorial.title }}" class="w-full h-32 object-cover rounded-lg">
+            </a>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-2">
+                {% if tutorial.difficulty %}
+                <span class="px-2 py-1 bg-{{ tutorial.difficulty.color_class }}-100 text-{{ tutorial.difficulty.color_class }}-800 rounded-full text-xs">{{ tutorial.difficulty.name }}</span>
+                {% endif %}
+                {% if tutorial.language %}
+                <span class="px-2 py-1 bg-{{ tutorial.language.color_class }}-100 text-{{ tutorial.language.color_class }}-800 rounded-full text-xs">{{ tutorial.language.name }}</span>
+                {% endif %}
+                <span class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs">{{ tutorial.read_time }} min</span>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">
+                <a href="{{ tutorial.get_absolute_url }}" class="hover:text-primary transition-colors">{{ tutorial.title }}</a>
+              </h3>
+              <p class="text-gray-600 text-sm mb-4">{{ tutorial.description|truncatechars:120 }}</p>
+              
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  {% if tutorial.author.profile_image %}
+                  <img src="{{ tutorial.author.profile_image.url }}" alt="{{ tutorial.author.name }}" class="w-8 h-8 rounded-full">
+                  {% else %}
+                  <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                    <i class="ri-user-line text-gray-500"></i>
+                  </div>
+                  {% endif %}
+                  <span class="text-sm text-gray-600">{{ tutorial.author.name }}</span>
+                </div>
+                
+                {% if user.is_authenticated %}
+                <div>
+                  {% if tutorial in user_progress.completed_tutorials.all %}
+                  <a href="{% url 'mark_tutorial_incomplete' path_slug=learning_path.slug tutorial_slug=tutorial.slug %}" class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm flex items-center gap-1">
+                    <i class="ri-checkbox-circle-fill"></i>
+                    <span>Completed</span>
+                  </a>
+                  {% else %}
+                  <a href="{% url 'mark_tutorial_complete' path_slug=learning_path.slug tutorial_slug=tutorial.slug %}" class="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm hover:bg-gray-200 transition-colors flex items-center gap-1">
+                    <i class="ri-checkbox-blank-circle-line"></i>
+                    <span>Mark as Complete</span>
+                  </a>
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="text-center py-12 bg-white rounded-xl">
+          <i class="ri-file-list-3-line text-gray-300 text-6xl mb-4"></i>
+          <h3 class="text-xl font-semibold text-gray-700">No tutorials in this learning path</h3>
+          <p class="text-gray-500 mt-2">Check back soon for new content!</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+

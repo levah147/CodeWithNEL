@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}About - CodeWithNEL{% endblock %}
+
+{% block content %}
+<section class="bg-primary/10 py-12 sm:py-16">
+  <div class="container mx-auto px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">About CodeWithNEL</h1>
+      <p class="text-lg text-gray-600">Learn more about our mission to empower developers through multi-platform educational content.</p>
+    </div>
+  </div>
+</section>
+
+<section class="py-12 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="max-w-3xl mx-auto">
+      <div class="prose max-w-none">
+        <h2>Our Mission</h2>
+        <p>
+          At CodeWithNEL, we believe that programming education should be accessible, engaging, and available across multiple platforms. Our mission is to empower developers of all skill levels by providing high-quality tutorials that are both informative and entertaining.
+        </p>
+        
+        <h2>Who We Are</h2>
+        <p>
+          CodeWithNEL was founded by NEL, a passionate software developer and educator with over 10 years of experience in the industry. What started as a small YouTube channel has grown into a multi-platform educational hub reaching hundreds of thousands of developers worldwide.
+        </p>
+        
+        <h2>Our Approach</h2>
+        <p>
+          We take a unique approach to programming education by:
+        </p>
+        <ul>
+          <li><strong>Meeting learners where they are</strong> - Whether you prefer long-form YouTube tutorials, quick TikTok tips, or professional LinkedIn content, we've got you covered.</li>
+          <li><strong>Focusing on practical skills</strong> - Our tutorials emphasize real-world applications and projects that you can add to your portfolio.</li>
+          <li><strong>Building a supportive community</strong> - Learning to code is better with friends. We foster a welcoming environment for developers to connect and grow together.</li>
+        </ul>
+        
+        <h2>Our Platforms</h2>
+        <p>
+          You can find CodeWithNEL content on:
+        </p>
+        <ul>
+          <li><strong>YouTube</strong> - In-depth tutorials and project walkthroughs</li>
+          <li><strong>TikTok</strong> - Quick tips, tricks, and coding challenges</li>
+          <li><strong>Facebook</strong> - Community discussions and live coding sessions</li>
+          <li><strong>LinkedIn</strong> - Professional development content and industry insights</li>
+        </ul>
+        
+        <h2>Get in Touch</h2>
+        <p>
+          Have questions or suggestions? We'd love to hear from you! Visit our <a href="{% url 'contact' %}">Contact page</a> to get in touch with our team.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+

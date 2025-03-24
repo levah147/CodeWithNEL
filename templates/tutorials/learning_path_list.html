@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Learning Paths - CodeWithNEL{% endblock %}
+
+{% block content %}
+<section class="bg-primary/10 py-12 sm:py-16">
+  <div class="container mx-auto px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Learning Paths</h1>
+      <p class="text-lg text-gray-600">Structured learning journeys to help you master programming skills</p>
+    </div>
+  </div>
+</section>
+
+<section class="py-12">
+  <div class="container mx-auto px-4">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {% for path in learning_paths %}
+      <a href="{{ path.get_absolute_url }}" class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+        <div class="relative">
+          {% if path.image %}
+          <img src="{{ path.image.url }}" alt="{{ path.title }}" class="w-full h-48 object-cover rounded-t-xl">
+          {% else %}
+          <div class="w-full h-48 bg-gray-200 rounded-t-xl flex items-center justify-center">
+            <i class="ri-road-map-line text-gray-400 text-5xl"></i>
+          </div>
+          {% endif %}
+          {% if path.is_featured %}
+          <span class="absolute top-3 right-3 px-2 py-1 bg-primary text-white text-xs rounded-full">Featured</span>
+          {% endif %}
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-semibold mb-2">{{ path.title }}</h3>
+          <p class="text-gray-600 text-sm mb-4">{{ path.description|truncatechars:120 }}</p>
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-gray-500">{{ path.tutorials.count }} tutorials</span>
+            {% if request.user.is_authenticated %}
+              {% for progress in request.user.userprogress_set.all %}
+                {% if progress.learning_path.id == path.id %}
+                <div class="flex items-center gap-2">
+                  <div class="w-20 h-2 bg-gray-200 rounded-full">
+                    <div class="h-full w-[{{ progress.progress_percentage }}%] bg-primary rounded-full"></div>
+                  </div>
+                  <span class="text-xs text-gray-500">{{ progress.progress_percentage }}%</span>
+                </div>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+            <div class="flex items-center gap-2">
+              <div class="w-20 h-2 bg-gray-200 rounded-full">
+                <div class="h-full w-0 bg-primary rounded-full"></div>
+              </div>
+              <span class="text-xs text-gray-500">0%</span>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </a>
+      {% empty %}
+      <div class="col-span-full text-center py-12">
+        <i class="ri-road-map-line text-gray-300 text-6xl mb-4"></i>
+        <h3 class="text-xl font-semibold text-gray-700">No learning paths available</h3>
+        <p class="text-gray-500 mt-2">Check back soon for new learning paths!</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
+

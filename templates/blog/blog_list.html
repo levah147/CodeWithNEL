@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog - CodeWithNEL{% endblock %}
+
+{% block content %}
+<section class="bg-white py-12">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">Programming Blog</h1>
+      <p class="text-xl text-gray-600 mb-8">Discover in-depth tutorials, tips and best practices across different programming platforms</p>
+      <div class="relative mb-8">
+        <form action="{% url 'blog_list' %}" method="get">
+          {{ search_form.query }}
+          <i class="ri-search-line absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
+        </form>
+      </div>
+      <div class="flex flex-wrap gap-3 mb-12">
+        <a href="{% url 'blog_list' %}" class="px-4 py-2 rounded-full {% if not selected_category %}bg-primary text-white{% else %}border hover:bg-gray-50{% endif %}">All</a>
+        {% for category in categories %}
+        <a href="{% url 'blog_list' %}?category={{ category.slug }}" class="px-4 py-2 rounded-full {% if selected_category == category.slug %}bg-primary text-white{% else %}border hover:bg-gray-50{% endif %}">{{ category.name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-12">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col lg:flex-row gap-8">
+      <div class="lg:w-2/3">
+        {% if search_form.cleaned_data.query %}
+        <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+          <p class="text-gray-700">
+            Search results for: <span class="font-semibold">{{ search_form.cleaned_data.query }}</span>
+            <a href="{% url 'blog_list' %}{% if selected_category %}?category={{ selected_category }}{% endif %}" class="ml-2 text-primary hover:underline">Clear</a>
+          </p>
+        </div>
+        {% endif %}
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          {% for post in page_obj %}
+          <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <a href="{{ post.get_absolute_url }}">
+              <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="w-full h-48 object-cover rounded-t-xl">
+              <div class="p-6">
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">{{ post.category.name }}</span>
+                <h3 class="text-xl font-semibold mt-4 mb-2">{{ post.title }}</h3>
+                <p class="text-gray-600 mb-4">{{ post.excerpt|truncatechars:100 }}</p>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    {% if post.author.profile_image %}
+                    <img src="{{ post.author.profile_image.url }}" alt="{{ post.author.name }}" class="w-8 h-8 rounded-full">
+                    {% else %}
+                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                      <i class="ri-user-line text-gray-500"></i>
+                    </div>
+                    {% endif %}
+                    <span class="text-sm text-gray-600">{{ post.author.name }}</span>
+                  </div>
+                  <div class="flex items-center gap-4 text-sm text-gray-500">
+                    <span>{{ post.read_time }} min read</span>
+                    <span>{{ post.published_date|date:"M d, Y" }}</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </article>
+          {% empty %}
+          <div class="col-span-full text-center py-12">
+            <i class="ri-file-list-3-line text-gray-300 text-6xl mb-4"></i>
+            <h3 class="text-xl font-semibold text-gray-700">No blog posts found</h3>
+            <p class="text-gray-500 mt-2">Try adjusting your search or filter criteria</p>
+          </div>
+          {% endfor %}
+        </div>
+
+        {% if page_obj.has_other_pages %}
+        <div class="flex justify-center mt-12">
+          <nav class="flex items-center gap-2">
+            {% if page_obj.has_previous %}
+            <a href="?{% if selected_category %}category={{ selected_category }}&{% endif %}{% if selected_tag %}tag={{ selected_tag }}&{% endif %}{% if search_form.cleaned_data.query %}query={{ search_form.cleaned_data.query }}&{% endif %}page={{ page_obj.previous_page_number }}" class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-50">
+              <i class="ri-arrow-left-s-line"></i>
+            </a>
+            {% else %}
+            <span class="w-10 h-10 flex items-center justify-center rounded-full border text-gray-300 cursor-not-allowed">
+              <i class="ri-arrow-left-s-line"></i>
+            </span>
+            {% endif %}
+            
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+              <span class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white">{{ num }}</span>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+              <a href="?{% if selected_category %}category={{ selected_category }}&{% endif %}{% if selected_tag %}tag={{ selected_tag }}&{% endif %}{% if search_form.cleaned_data.query %}query={{ search_form.cleaned_data.query }}&{% endif %}page={{ num }}" class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-50">{{ num }}</a>
+              {% endif %}
+            {% endfor %}
+            
+            {% if page_obj.has_next %}
+            <a href="?{% if selected_category %}category={{ selected_category }}&{% endif %}{% if selected_tag %}tag={{ selected_tag }}&{% endif %}{% if search_form.cleaned_data.query %}query={{ search_form.cleaned_data.query }}&{% endif %}page={{ page_obj.next_page_number }}" class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-50">
+              <i class="ri-arrow-right-s-line"></i>
+            </a>
+            {% else %}
+            <span class="w-10 h-10 flex items-center justify-center rounded-full border text-gray-300 cursor-not-allowed">
+              <i class="ri-arrow-right-s-line"></i>
+            </span>
+            {% endif %}
+          </nav>
+        </div>
+        {% endif %}
+      </div>
+
+      <div class="lg:w-1/3 space-y-8">
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold mb-4">Categories</h3>
+          <ul class="space-y-3">
+            {% for category in categories %}
+            <li class="flex items-center justify-between">
+              <a href="{% url 'blog_list' %}?category={{ category.slug }}" class="text-gray-600 hover:text-primary">{{ category.name }}</a>
+              <span class="text-sm text-gray-500">{{ category.post_count }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold mb-4">Popular Posts</h3>
+          <div class="space-y-4">
+            {% for popular in popular_posts %}
+            <a href="{{ popular.post.get_absolute_url }}" class="flex gap-4">
+              <img src="{{ popular.post.featured_image.url }}" alt="{{ popular.post.title }}" class="w-20 h-20 rounded-lg object-cover">
+              <div>
+                <h4 class="font-medium text-gray-900">{{ popular.post.title }}</h4>
+                <p class="text-sm text-gray-500">{{ popular.post.view_count }} views</p>
+              </div>
+            </a>
+            {% empty %}
+            <p class="text-gray-500">No popular posts yet.</p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold mb-4">Tags</h3>
+          <div class="flex flex-wrap gap-2">
+            {% for tag in tags %}
+            <a href="{% url 'blog_list' %}?tag={{ tag.slug }}" class="px-3 py-1 bg-gray-100 rounded-full text-sm text-gray-600 cursor-pointer hover:bg-gray-200">{{ tag.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+        
+        <div class="bg-primary/10 rounded-xl p-6">
+          <h3 class="text-lg font-semibold mb-2">Subscribe</h3>
+          <p class="text-sm text-gray-600 mb-4">Get notified about new blog posts</p>
+          <form method="post" action="{% url 'home' %}" class="space-y-3">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Your email" class="w-full px-3 py-2 rounded border-none focus:ring-2 focus:ring-primary/20 text-sm">
+            <button type="submit" class="w-full bg-primary text-white px-4 py-2 rounded-md font-medium hover:bg-primary/90 transition-colors text-sm">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutorials - CodeWithNEL</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<script>
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary: '#6366f1',
+secondary: '#14b8a6'
+},
+borderRadius: {
+'none': '0px',
+'sm': '4px',
+DEFAULT: '8px',
+'md': '12px',
+'lg': '16px',
+'xl': '20px',
+'2xl': '24px',
+'3xl': '32px',
+'full': '9999px',
+'button': '8px'
+}
+}
+}
+}
+</script>
+<style>
+:where([class^="ri-"])::before { content: "\f3c2"; }
+.back-to-top {
+display: none;
+position: fixed;
+bottom: 20px;
+right: 20px;
+z-index: 99;
+}
+.dropdown-content {
+display: none;
+position: absolute;
+min-width: 200px;
+z-index: 50;
+}
+.dropdown:hover .dropdown-content {
+display: block;
+}
+</style>
+</head>
+<body class="font-['Inter'] bg-gray-50">
+<!-- <header class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
+<nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+<div class="flex items-center space-x-8">
+<a href="#" class="text-2xl font-['Pacifico'] text-primary">CodeWithNEL</a>
+<div class="hidden md:flex items-center space-x-6">
+<a href="#" class="text-gray-700 hover:text-primary">Home</a>
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/869c00fe-901d-486d-9290-5706e90cb000" data-readdy="true" class="text-gray-700 hover:text-primary">Blog</a>
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/4ab9d43b-49b6-4614-a3a3-6762b97be2f6" data-readdy="true" class="text-primary">Tutorials</a>
+<a href="#" class="text-gray-700 hover:text-primary">About</a>
+<a href="#" class="text-gray-700 hover:text-primary">Contact</a>
+</div>
+</div>
+<div class="flex items-center space-x-6">
+<div class="relative hidden md:block">
+<input type="text" placeholder="Search tutorials..." class="pl-10 pr-4 py-2 w-64 rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm">
+<i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+</div>
+<div class="flex items-center space-x-4">
+<a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-red-500">
+<i class="ri-youtube-fill ri-lg"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-black">
+<i class="ri-tiktok-fill ri-lg"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-blue-600">
+<i class="ri-facebook-fill ri-lg"></i>
+</a>
+<a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-blue-500">
+<i class="ri-linkedin-fill ri-lg"></i>
+</a>
+</div>
+<button class="md:hidden w-10 h-10 flex items-center justify-center" id="mobile-menu-button">
+<i class="ri-menu-line ri-2x"></i>
+</button>
+</div>
+</nav>
+<div class="md:hidden hidden" id="mobile-menu">
+<div class="px-4 py-3 space-y-3">
+<a href="#" class="block text-gray-700">Home</a>
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/869c00fe-901d-486d-9290-5706e90cb000" data-readdy="true" class="block text-gray-700">Blog</a>
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/4ab9d43b-49b6-4614-a3a3-6762b97be2f6" data-readdy="true" class="block text-primary">Tutorials</a>
+<a href="#" class="block text-gray-700">About</a>
+<a href="#" class="block text-gray-700">Contact</a>
+<div class="relative">
+<input type="text" placeholder="Search tutorials..." class="w-full pl-10 pr-4 py-2 rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm">
+<i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+</div>
+</div>
+</div>
+</header> -->
+<header class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
+    <nav class="container mx-auto px-4 py-4">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+        <div class="flex items-center justify-between">
+          <a href="#" class="text-2xl font-['Pacifico'] text-primary">CodeWithNEL</a>
+          <button class="lg:hidden w-10 h-10 flex items-center justify-center" id="mobile-menu-button" aria-label="Toggle menu" aria-expanded="false">
+            <i class="ri-menu-line ri-2x"></i>
+          </button>
+        </div>
+        <div class="hidden lg:flex items-center space-x-6">
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Home</a>
+          <a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/4ab9d43b-49b6-4614-a3a3-6762b97be2f6" data-readdy="true" class="text-gray-700 hover:text-primary transition-colors">Blog</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Tutorials</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">About</a>
+          <a href="#" class="text-gray-700 hover:text-primary transition-colors">Contact</a>
+        </div>
+        <div class="hidden lg:flex items-center space-x-6">
+          <div class="relative">
+            <input type="text" placeholder="Search tutorials..." class="pl-10 pr-4 py-2 w-64 rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm">
+            <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-red-500 transition-colors" aria-label="YouTube">
+              <i class="ri-youtube-fill ri-lg"></i>
+            </a>
+            <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-black transition-colors" aria-label="TikTok">
+              <i class="ri-tiktok-fill ri-lg"></i>
+            </a>
+            <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors" aria-label="Facebook">
+              <i class="ri-facebook-fill ri-lg"></i>
+            </a>
+            <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-blue-500 transition-colors" aria-label="LinkedIn">
+              <i class="ri-linkedin-fill ri-lg"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="lg:hidden hidden bg-white border-t mobile-menu-enter" id="mobile-menu">
+      <div class="container mx-auto px-4 py-4 space-y-4">
+        <a href="/index.html" class="block text-gray-700 hover:text-primary py-2 transition-colors">Home</a>
+        <a href="/blog.html"  class="block text-gray-700 hover:text-primary py-2 transition-colors">Blog</a>
+        <a href="/tutorial.html" class="block text-gray-700 hover:text-primary py-2 transition-colors">Tutorials</a>
+        <a href="#" class="block text-gray-700 hover:text-primary py-2 transition-colors">About</a>
+        <a href="#" class="block text-gray-700 hover:text-primary py-2 transition-colors">Contact</a>
+        <div class="relative">
+          <input type="text" placeholder="Search tutorials..." class="w-full pl-10 pr-4 py-2 rounded-full bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/20 text-sm">
+          <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        </div>
+        <div class="flex items-center space-x-4 py-2">
+          <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-red-500 transition-colors" aria-label="YouTube">
+            <i class="ri-youtube-fill ri-lg"></i>
+          </a>
+          <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-black transition-colors" aria-label="TikTok">
+            <i class="ri-tiktok-fill ri-lg"></i>
+          </a>
+          <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-blue-600 transition-colors" aria-label="Facebook">
+            <i class="ri-facebook-fill ri-lg"></i>
+          </a>
+          <a href="#" class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-blue-500 transition-colors" aria-label="LinkedIn">
+            <i class="ri-linkedin-fill ri-lg"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+<main class="pt-20">
+<section class="bg-white py-12">
+<div class="container mx-auto px-4">
+<div class="max-w-4xl mx-auto text-center">
+<h1 class="text-4xl font-bold text-gray-900 mb-4">Programming Tutorials</h1>
+<p class="text-xl text-gray-600 mb-8">Master programming with our comprehensive tutorials and hands-on examples</p>
+<div class="relative mb-12">
+<input type="text" placeholder="Search tutorials..." class="w-full pl-12 pr-4 py-3 rounded-lg bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary/20 text-base">
+<i class="ri-search-line absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
+</div>
+</div>
+</div>
+</section>
+
+<section class="py-8 bg-gray-50">
+<div class="container mx-auto px-4">
+<div class="flex flex-wrap gap-4 justify-center mb-8">
+<div class="dropdown relative">
+<button class="px-4 py-2 bg-white rounded-full border hover:bg-gray-50 flex items-center gap-2">
+<span>Language</span>
+<i class="ri-arrow-down-s-line"></i>
+</button>
+<div class="dropdown-content bg-white mt-2 rounded-xl shadow-lg border">
+<div class="p-2 space-y-1">
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">JavaScript</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">Python</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">Java</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">C++</button>
+</div>
+</div>
+</div>
+
+<div class="dropdown relative">
+<button class="px-4 py-2 bg-white rounded-full border hover:bg-gray-50 flex items-center gap-2">
+<span>Framework</span>
+<i class="ri-arrow-down-s-line"></i>
+</button>
+<div class="dropdown-content bg-white mt-2 rounded-xl shadow-lg border">
+<div class="p-2 space-y-1">
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">React</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">Vue</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">Angular</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">Django</button>
+</div>
+</div>
+</div>
+
+<div class="dropdown relative">
+<button class="px-4 py-2 bg-white rounded-full border hover:bg-gray-50 flex items-center gap-2">
+<span>Difficulty</span>
+<i class="ri-arrow-down-s-line"></i>
+</button>
+<div class="dropdown-content bg-white mt-2 rounded-xl shadow-lg border">
+<div class="p-2 space-y-1">
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">Beginner</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">Intermediate</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">Advanced</button>
+</div>
+</div>
+</div>
+
+<div class="dropdown relative">
+<button class="px-4 py-2 bg-white rounded-full border hover:bg-gray-50 flex items-center gap-2">
+<span>Duration</span>
+<i class="ri-arrow-down-s-line"></i>
+</button>
+<div class="dropdown-content bg-white mt-2 rounded-xl shadow-lg border">
+<div class="p-2 space-y-1">
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">0-30 min</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">30-60 min</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">60+ min</button>
+</div>
+</div>
+</div>
+
+<div class="dropdown relative">
+<button class="px-4 py-2 bg-white rounded-full border hover:bg-gray-50 flex items-center gap-2">
+<span>Sort by</span>
+<i class="ri-arrow-down-s-line"></i>
+</button>
+<div class="dropdown-content bg-white mt-2 rounded-xl shadow-lg border">
+<div class="p-2 space-y-1">
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">Most Recent</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">Most Popular</button>
+<button class="w-full text-left px-4 py-2 rounded hover:bg-gray-50 text-sm">Highest Rated</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="py-12">
+<div class="container mx-auto px-4">
+<div class="flex flex-col lg:flex-row gap-8">
+<div class="lg:w-3/4">
+<div class="grid md:grid-cols-2 gap-6">
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/4ab9d43b-49b6-4614-a3a3-6762b97be2f6" data-readdy="true" class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="relative">
+<img src="https://public.readdy.ai/ai/img_res/f963b121283ff734d8514aefc5438828.jpg" alt="React Hooks" class="w-full h-40 object-cover rounded-t-xl">
+<span class="absolute top-3 right-3 px-2 py-1 bg-green-500 text-white text-xs rounded-full">Beginner</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">React</span>
+<span class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs">45 min</span>
+</div>
+<h3 class="text-xl font-semibold mb-2">Understanding React Hooks</h3>
+<p class="text-gray-600 text-sm mb-4">Learn how to use React Hooks to manage state and side effects in functional components.</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<img src="https://public.readdy.ai/ai/img_res/933c4630ddca065bdf5d720fbb745e4b.jpg" alt="Author" class="w-8 h-8 rounded-full">
+<span class="text-sm text-gray-600">David Chen</span>
+</div>
+<div class="flex items-center gap-2 text-sm text-gray-500">
+<i class="ri-eye-line"></i>
+<span>2.4k</span>
+</div>
+</div>
+</div>
+</a>
+
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/4ab9d43b-49b6-4614-a3a3-6762b97be2f6" data-readdy="true" class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="relative">
+<img src="https://public.readdy.ai/ai/img_res/be8380d580abefa864fd7a8f0818dfc5.jpg" alt="Python ML" class="w-full h-40 object-cover rounded-t-xl">
+<span class="absolute top-3 right-3 px-2 py-1 bg-yellow-500 text-white text-xs rounded-full">Intermediate</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Python</span>
+<span class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs">60 min</span>
+</div>
+<h3 class="text-xl font-semibold mb-2">Machine Learning with Python</h3>
+<p class="text-gray-600 text-sm mb-4">Build your first machine learning model using Python and scikit-learn.</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<img src="https://public.readdy.ai/ai/img_res/3a3960acd8ed5611d50280eff321dbdf.jpg" alt="Author" class="w-8 h-8 rounded-full">
+<span class="text-sm text-gray-600">Emma Watson</span>
+</div>
+<div class="flex items-center gap-2 text-sm text-gray-500">
+<i class="ri-eye-line"></i>
+<span>3.1k</span>
+</div>
+</div>
+</div>
+</a>
+
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/4ab9d43b-49b6-4614-a3a3-6762b97be2f6" data-readdy="true" class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="relative">
+<img src="https://public.readdy.ai/ai/img_res/588d6a218f70c5dcf0ba9786775137cc.jpg" alt="Go Microservices" class="w-full h-40 object-cover rounded-t-xl">
+<span class="absolute top-3 right-3 px-2 py-1 bg-red-500 text-white text-xs rounded-full">Advanced</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="px-2 py-1 bg-cyan-100 text-cyan-800 rounded-full text-xs">Go</span>
+<span class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs">90 min</span>
+</div>
+<h3 class="text-xl font-semibold mb-2">Building Microservices with Go</h3>
+<p class="text-gray-600 text-sm mb-4">Learn how to design and implement microservices architecture using Go.</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<img src="https://public.readdy.ai/ai/img_res/2aeb760010f0c3ffd196dab1be6d3642.jpg" alt="Author" class="w-8 h-8 rounded-full">
+<span class="text-sm text-gray-600">Robert Zhang</span>
+</div>
+<div class="flex items-center gap-2 text-sm text-gray-500">
+<i class="ri-eye-line"></i>
+<span>1.8k</span>
+</div>
+</div>
+</div>
+</a>
+
+<a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/4ab9d43b-49b6-4614-a3a3-6762b97be2f6" data-readdy="true" class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<div class="relative">
+<img src="https://public.readdy.ai/ai/img_res/0a19b5f40761d0d303cabb4b343197f5.jpg" alt="Flutter UI" class="w-full h-40 object-cover rounded-t-xl">
+<span class="absolute top-3 right-3 px-2 py-1 bg-green-500 text-white text-xs rounded-full">Beginner</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="px-2 py-1 bg-purple-100 text-purple-800 rounded-full text-xs">Flutter</span>
+<span class="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs">30 min</span>
+</div>
+<h3 class="text-xl font-semibold mb-2">Flutter UI Fundamentals</h3>
+<p class="text-gray-600 text-sm mb-4">Create beautiful and responsive user interfaces with Flutter.</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<img src="https://public.readdy.ai/ai/img_res/2bc97eefb75da9919f08fd68008522aa.jpg" alt="Author" class="w-8 h-8 rounded-full">
+<span class="text-sm text-gray-600">Sophie Anderson</span>
+</div>
+<div class="flex items-center gap-2 text-sm text-gray-500">
+<i class="ri-eye-line"></i>
+<span>2.2k</span>
+</div>
+</div>
+</div>
+</a>
+</div>
+
+<div class="flex justify-center mt-12">
+<nav class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-50">
+<i class="ri-arrow-left-s-line"></i>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-50">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-50">3</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full border hover:bg-gray-50">
+<i class="ri-arrow-right-s-line"></i>
+</button>
+</nav>
+</div>
+</div>
+
+<div class="lg:w-1/4 space-y-6">
+<div class="bg-white rounded-xl shadow-sm p-6">
+<h3 class="text-lg font-semibold mb-4">Learning Paths</h3>
+<div class="space-y-4">
+<a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-gray-100">
+<h4 class="font-medium mb-1">Frontend Development</h4>
+<p class="text-sm text-gray-600">HTML, CSS, JavaScript & React</p>
+<div class="mt-2 h-2 bg-gray-200 rounded-full">
+<div class="h-full w-3/4 bg-primary rounded-full"></div>
+</div>
+</a>
+<a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-gray-100">
+<h4 class="font-medium mb-1">Backend Development</h4>
+<p class="text-sm text-gray-600">Node.js, Python & Databases</p>
+<div class="mt-2 h-2 bg-gray-200 rounded-full">
+<div class="h-full w-1/2 bg-primary rounded-full"></div>
+</div>
+</a>
+<a href="#" class="block p-4 bg-gray-50 rounded-lg hover:bg-gray-100">
+<h4 class="font-medium mb-1">Mobile Development</h4>
+<p class="text-sm text-gray-600">Flutter & React Native</p>
+<div class="mt-2 h-2 bg-gray-200 rounded-full">
+<div class="h-full w-1/4 bg-primary rounded-full"></div>
+</div>
+</a>
+</div>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm p-6">
+<h3 class="text-lg font-semibold mb-4">Popular Categories</h3>
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-gray-600">Web Development</span>
+<span class="text-sm text-gray-500">128 tutorials</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-gray-600">Data Science</span>
+<span class="text-sm text-gray-500">96 tutorials</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-gray-600">Mobile Development</span>
+<span class="text-sm text-gray-500">84 tutorials</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-gray-600">Cloud Computing</span>
+<span class="text-sm text-gray-500">72 tutorials</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-gray-600">DevOps</span>
+<span class="text-sm text-gray-500">64 tutorials</span>
+</div>
+</div>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm p-6">
+<h3 class="text-lg font-semibold mb-4">Skill Level Distribution</h3>
+<div id="skillChart" class="h-64"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+
+<footer class="bg-gray-900 text-gray-300 py-20">
+<div class="container mx-auto px-4">
+<div class="grid md:grid-cols-4 gap-12">
+<div class="space-y-6">
+<h3 class="text-2xl font-['Pacifico'] text-white">CodeWithNEL</h3>
+<p class="text-gray-400">Empowering developers through multi-platform educational content.</p>
+<div class="flex space-x-4">
+<a href="#" class="text-gray-400 hover:text-red-500">
+<i class="ri-youtube-fill ri-lg"></i>
+</a>
+<a href="#" class="text-gray-400 hover:text-white">
+<i class="ri-tiktok-fill ri-lg"></i>
+</a>
+<a href="#" class="text-gray-400 hover:text-blue-600">
+<i class="ri-facebook-fill ri-lg"></i>
+</a>
+<a href="#" class="text-gray-400 hover:text-blue-500">
+<i class="ri-linkedin-fill ri-lg"></i>
+</a>
+</div>
+</div>
+<div>
+<h4 class="text-white font-semibold mb-6">Quick Links</h4>
+<ul class="space-y-4">
+<li><a href="#" class="hover:text-white">Home</a></li>
+<li><a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/869c00fe-901d-486d-9290-5706e90cb000" data-readdy="true" class="hover:text-white">Blog</a></li>
+<li><a href="https://readdy.ai/home/1a2943f1-3e23-4602-809c-9ae2cfb8d513/4ab9d43b-49b6-4614-a3a3-6762b97be2f6" data-readdy="true" class="hover:text-white">Tutorials</a></li>
+<li><a href="#" class="hover:text-white">About</a></li>
+<li><a href="#" class="hover:text-white">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-semibold mb-6">Contact</h4>
+<ul class="space-y-4">
+<li class="flex items-center gap-2">
+<i class="ri-mail-line"></i>
+<span>hello@codewithnel.com</span>
+</li>
+<li class="flex items-center gap-2">
+<i class="ri-map-pin-line"></i>
+<span>San Francisco, CA</span>
+</li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-semibold mb-6">Newsletter</h4>
+<form class="space-y-4">
+<input type="email" placeholder="Your email" class="w-full px-4 py-2 rounded bg-gray-800 border-none focus:ring-2 focus:ring-primary/20 text-white">
+<button type="submit" class="w-full bg-primary text-white px-4 py-2 rounded-button font-medium hover:bg-primary/90 transition-colors">Subscribe</button>
+</form>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-gray-800 flex flex-wrap justify-between items-center">
+<p>&copy; 2025 CodeWithNEL. All rights reserved.</p>
+<div class="flex gap-4">
+<a href="#" class="hover:text-white">Privacy Policy</a>
+<a href="#" class="hover:text-white">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+
+<button class="back-to-top bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-colors" id="backToTop">
+<i class="ri-arrow-up-line ri-lg"></i>
+</button>
+
+<script>
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+const backToTop = document.getElementById('backToTop');
+
+mobileMenuButton.addEventListener('click', () => {
+mobileMenu.classList.toggle('hidden');
+});
+
+window.addEventListener('scroll', () => {
+if (window.pageYOffset > 300) {
+backToTop.style.display = 'block';
+} else {
+backToTop.style.display = 'none';
+}
+});
+
+backToTop.addEventListener('click', () => {
+window.scrollTo({
+top: 0,
+behavior: 'smooth'
+});
+});
+
+const skillChart = echarts.init(document.getElementById('skillChart'));
+const skillOption = {
+animation: false,
+tooltip: {
+trigger: 'item',
+backgroundColor: 'rgba(255, 255, 255, 0.9)',
+textStyle: {
+color: '#1f2937'
+}
+},
+series: [{
+type: 'pie',
+radius: ['40%', '70%'],
+avoidLabelOverlap: false,
+itemStyle: {
+borderRadius: 10,
+borderColor: '#fff',
+borderWidth: 2
+},
+label: {
+show: false
+},
+labelLine: {
+show: false
+},
+data: [
+{ value: 45, name: 'Beginner', itemStyle: { color: 'rgba(87, 181, 231, 1) ' } },
+{ value: 35, name: 'Intermediate', itemStyle: { color: 'rgba(255, 193, 7, 1)' } },
+{ value: 20, name: 'Advanced', itemStyle: { color: 'rgba(239, 68, 68, 1)' } }
+]
+}]
+};
+skillChart.setOption(skillOption);
+
+window.addEventListener('resize', () => {
+skillChart.resize();
+});
+</script>
+</body>
+</html>
