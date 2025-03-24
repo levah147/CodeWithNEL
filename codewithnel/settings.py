@@ -59,13 +59,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'codewithnel.wsgi.application'
 
 # Database
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 from  decouple import config
 
 DATABASES = {
